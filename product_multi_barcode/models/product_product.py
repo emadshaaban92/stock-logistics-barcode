@@ -26,7 +26,7 @@ class ProductProduct(models.Model):
     @api.depends("barcode_ids.name", "barcode_ids.sequence")
     def _compute_barcode(self):
         for product in self:
-            product.barcode = product.barcode_ids[:1].name
+            product.barcode = product.barcode_ids.sorted('sequence')[:1].name
 
     def _inverse_barcode(self):
         """Store the product's barcode value in the barcode model."""
